@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 15:01:25">
+<Class name="Scan.AddressFileRequest">
+<ClassType>persistent</ClassType>
+<Language>cache</Language>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Request</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59494,48419.511297</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="IsExternal">
+<Type>%Boolean</Type>
+</Property>
+
+<Property name="IsRelated">
+<Type>%Boolean</Type>
+</Property>
+
+<Property name="ToAddress">
+<Type>%String</Type>
+</Property>
+
+<Property name="FileName">
+<Type>%String</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>AddressFileRequestDefaultData</DefaultData>
+<Data name="AddressFileRequestDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"AddressFileRequest"</Subscript>
+<Value name="1">
+<Value>FileName</Value>
+</Value>
+<Value name="2">
+<Value>IsExternal</Value>
+</Value>
+<Value name="3">
+<Value>IsRelated</Value>
+</Value>
+<Value name="4">
+<Value>ToAddress</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Checksum value="2304716876"/>
+</Export>

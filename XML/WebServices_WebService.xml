@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2011.2 (Build 313U)" ts="2011-10-17 10:12:37">
+<Class name="Scan.WS.ScanWebService">
+<Super>EnsLib.SOAP.Service</Super>
+<TimeChanged>62381,33567.388578</TimeChanged>
+<TimeCreated>61803,58516.653469</TimeCreated>
+
+<Method name="ScanEmail">
+<FormalSpec>Name:%String,ID:%Integer,ToAddress:%String,EmailText:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<WebMethod>1</WebMethod>
+<Implementation><![CDATA[
+		set tRequest = ##class(Scan.CheckEmployeeRequest).%New()
+		set tRequest.Name = Name
+		set tRequest.ID = ID
+		set tRequest.ToAddress = ToAddress
+		set tRequest.EmailText = EmailText
+		Set tSC = ..ProcessInput(tRequest,.tResponse)
+		if $$$ISERR(tSC) do ..ReturnMethodStatusFault(tSC)
+	
+		Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="OnProcessInput">
+<FormalSpec>pRequest:Scan.CheckEmployeeRequest,*pResponse:%RegisteredObject</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+		If $FIND($ZConvert(pRequest.EmailText,"U"),"GIZMO") { 
+			Set tSC = ..SendRequestAsync("Scan.DetermineBlackList",pRequest)
+		} 
+		ELSE {
+			Set tEmailFileRequest = ##class(Scan.EmailFileRequest).%New()
+			Set tEmailFileRequest.FileName = "SafeEmail.txt"
+			Set tEmailFileRequest.Contents = pRequest
+			Set tSC = ..SendRequestAsync("Scan.MakeFileOperation",tEmailFileRequest)
+		}
+			
+
+		Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Parameter name="SERVICENAME">
+<Description>
+The SOAP name of this service.
+Override this parameter in the subclass.</Description>
+<Default>ScanWebService</Default>
+</Parameter>
+</Class>
+</Export>

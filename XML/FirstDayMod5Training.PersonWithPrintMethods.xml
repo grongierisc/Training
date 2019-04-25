@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="24" zv="Cache for Windows (x86-64) 2010.2 (Build 454U)" ts="2010-11-23 12:11:39">
+<Class name="Training.Person">
+<Description>
+A sample class for training.</Description>
+<Super>%Persistent,%Populate</Super>
+<TimeChanged>62053,43684.431193</TimeChanged>
+<TimeCreated>62052,54248.823799</TimeCreated>
+
+<Property name="PhoneNumber">
+<Type>%String</Type>
+<Parameter name="MAXLEN" value="12"/>
+<Parameter name="POPSPEC" value="USPhone()"/>
+</Property>
+
+<Index name="PhoneNumberIndex">
+<Properties>PhoneNumber</Properties>
+</Index>
+
+<Property name="Name">
+<Type>%String</Type>
+<Required>1</Required>
+</Property>
+
+<Index name="NameIndex">
+<Properties>Name</Properties>
+</Index>
+
+<Property name="Email">
+<Type>%String</Type>
+<Parameter name="POPSPEC" value="##class(Training.Person).Email()"/>
+</Property>
+
+<Property name="DOB">
+<Type>%Date</Type>
+<Parameter name="FORMAT" value="5"/>
+<Parameter name="MAXVAL" value="+$H"/>
+</Property>
+
+<Method name="Email">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	Set email=##class(%PopulateUtils).FirstName()
+	_"@"
+	_##class(%PopulateUtils).Syllable(10)
+	
+	Set suffix=$Piece(".com,.net,.org",",",$Random(3)+1)
+	
+	Set email=email_suffix
+	
+	Quit $ZStrip(email,"*W")
+]]></Implementation>
+</Method>
+
+<Property name="FavoriteColors">
+<Type>%String</Type>
+<Collection>list</Collection>
+<Parameter name="POPSPEC" value=":3"/>
+<Parameter name="VALUELIST" value=",Red,Orange,Yellow,Green,Blue,Purple,Black,White"/>
+</Property>
+
+<Method name="PrintPerson">
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Write ..Name, !, $ZDATE(..DOB), !, ..PhoneNumber,!
+	for i=1:1:..FavoriteColors.Count()
+	{
+		Write ..FavoriteColors.GetAt(i)_" ",!
+	} 
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="PrintAPerson">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>id:%Integer</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	if ##class(Training.Person).%ExistsId(id)
+	{
+		Set person=##class(Training.Person).%OpenId(id)
+		Set tSC=person.PrintPerson()
+		Quit tSC	
+		
+	}
+	else {
+		Quit $$$ERROR($$$GeneralError,"No such person")
+		
+	}
+]]></Implementation>
+</Method>
+
+<Method name="PrintAllPeople">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	Set stmt=##class(%SQL.Statement).%New()
+	Do stmt.%PrepareClassQuery("Training.Person","Extent")
+	Set rs=stmt.%Execute()
+	While rs.%Next()
+	{
+		do ##class(Training.Person).PrintAPerson(rs.%GetData(1))	
+	}
+]]></Implementation>
+</Method>
+
+<Method name="%OnOpen">
+<Description><![CDATA[
+This callback method is invoked by the <METHOD>%Open</METHOD> method to 
+provide notification that the object specified by <VAR>oid</VAR> is being opened.
+
+<P>If this method returns an error then the object will not be opened.]]></Description>
+<Private>1</Private>
+<ReturnType>%Status</ReturnType>
+<ServerOnly>1</ServerOnly>
+<Implementation><![CDATA[
+	Write "Object Opened",!
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Training.PersonD</DataLocation>
+<DefaultData>PersonDefaultData</DefaultData>
+<IdLocation>^Training.PersonD</IdLocation>
+<IndexLocation>^Training.PersonI</IndexLocation>
+<StreamLocation>^Training.PersonS</StreamLocation>
+<Data name="PersonDefaultData">
+<Structure>listnode</Structure>
+<Subscript/>
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>PhoneNumber</Value>
+</Value>
+<Value name="3">
+<Value>Name</Value>
+</Value>
+<Value name="4">
+<Value>Email</Value>
+</Value>
+<Value name="5">
+<Value>DOB</Value>
+</Value>
+<Value name="6">
+<Value>FavoriteColors</Value>
+</Value>
+</Data>
+<Property name="%%CLASSNAME">
+</Property>
+<Property name="DOB">
+</Property>
+<Property name="Email">
+</Property>
+<Property name="FavoriteColors">
+</Property>
+<Property name="Name">
+</Property>
+<Property name="PhoneNumber">
+</Property>
+</Storage>
+</Class>
+</Export>

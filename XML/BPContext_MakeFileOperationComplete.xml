@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 14:56:27">
+<Class name="Scan.MakeFileOperation">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessOperation</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59494,48419.616277</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Parameter name="ADAPTER">
+<Default>EnsLib.File.OutboundAdapter</Default>
+</Parameter>
+
+<Parameter name="INVOCATION">
+<Default>Queue</Default>
+</Parameter>
+
+<Method name="EmailFile">
+<FormalSpec>pRequest:Scan.EmailFileRequest,*pResponse:Ens.Response</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+
+	//The out string will hold the entry for the file.
+	//Each piece of data is on a separate line.
+	set info=pRequest.Contents
+	set out= "The following email was sent on "_$ZDATETIME($HOROLOG)_$c(13,10)  
+	set out=out_info.Name_$c(13,10)
+	set out=out_info.ID_$c(13,10)
+	set out=out_info.ToAddress_$c(13,10)
+	set out=out_info.EmailText_$c(13,10)
+	
+	set tSC=..Adapter.PutString(pRequest.FileName,out)
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="AddressFile">
+<FormalSpec>pRequest:Scan.AddressFileRequest,*pResponse:Ens.Response</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+
+	set out = $ZDATETIME($H)_" " 
+	set out = out_pRequest.ToAddress_" "
+	set out = out_pRequest.IsRelated_" "
+	set out = out_pRequest.IsExternal_$c(13,10)
+	
+	set tSC = ..Adapter.PutString(pRequest.FileName,out)
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<XData name="MessageMap">
+<Data><![CDATA[
+<MapItems>
+	<MapItem MessageType="Scan.EmailFileRequest"> 
+		<Method>EmailFile</Method>
+	</MapItem>
+		<MapItem MessageType="Scan.AddressFileRequest"> 
+		<Method>AddressFile</Method>
+	</MapItem>
+</MapItems>
+]]></Data>
+</XData>
+</Class>
+<Checksum value="2917641419"/>
+</Export>

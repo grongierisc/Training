@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 916U)" ts="2004-01-26 13:52:38">
+<Class name="Scan.ScanEmailProduction">
+<Description>
+</Description>
+<Language>cache</Language>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Production</Super>
+<TimeChanged>59560,49918.375195</TimeChanged>
+
+<XData name="ProductionDefinition">
+<Data><![CDATA[<Production Name="Scan.ScanEmailProduction" TestingEnabled="true">
+ <ActorPoolSize>2</ActorPoolSize>
+</Production>
+]]></Data>
+</XData>
+</Class>
+<Checksum value="3664203120"/>
+</Export>

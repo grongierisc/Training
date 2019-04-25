@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 14:59:36">
+<Class name="Scan.ValidateToAddressRequest">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Request</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59494,48419.661914</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="ToAddress">
+<Type>%String</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>ValidateToAddressRequestDefaultData</DefaultData>
+<Data name="ValidateToAddressRequestDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"ValidateToAddressRequest"</Subscript>
+<Value name="1">
+<Value>ToAddress</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Scan.ValidateToAddressResponse">
+<Description>
+</Description>
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Response</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59494,48419.669048</TimeCreated>
+
+<Property name="IsExternal">
+<Type>%Boolean</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>ValidateToAddressResponseDefaultData</DefaultData>
+<Data name="ValidateToAddressResponseDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"ValidateToAddressResponse"</Subscript>
+<Value name="1">
+<Value>IsExternal</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Checksum value="2173314925"/>
+</Export>

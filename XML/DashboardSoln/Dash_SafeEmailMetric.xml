@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 2185U)" ts="2005-01-04 16:35:45">
+<Class name="Scan.SafeEmailCountMetric">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessMetric</Super>
+<TimeChanged>59904,59616.823408</TimeChanged>
+
+<Property name="SafeEmails">
+<Type>Ens.DataType.Metric</Type>
+<Parameter name="RANGELOWER" value="0"/>
+<Parameter name="RANGEUPPER" value="50"/>
+<Parameter name="UNITS" value="Safe Emails"/>
+</Property>
+
+<Property name="LastFile">
+<Type>Ens.DataType.Metric</Type>
+<Parameter name="RANGELOWER" value="-1"/>
+<Parameter name="RANGEUPPER" value="1"/>
+</Property>
+
+<Method name="OnCalculateMetrics">
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+
+	//Determine how many emails went to SafeEmail.txt
+	&sql(SELECT COUNT(*) INTO :count
+		 FROM Scan.EmailFileRequest
+		 WHERE FileName='SafeEmail.txt')
+
+	//Set the metric to the current count of emails to SafeEmail.txt
+	Set ..SafeEmails = count
+	
+	//Determine the name of the file the last email was written to
+	
+	&sql(SELECT TOP 1 FileName INTO :fn
+		 FROM Scan.EmailFileRequest
+		 ORDER BY ID DESC)
+
+	//Set the metric to 1 for a smile and -1 for a frown
+	If fn="SafeEmail.txt" {
+		set ..LastFile = 1}
+	Else {set ..LastFile = -1}
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+</Class>
+<Checksum value="598806084"/>
+</Export>

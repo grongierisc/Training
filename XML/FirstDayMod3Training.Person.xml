@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="24" zv="Cache for Windows (x86-64) 2010.2 (Build 454U)" ts="2010-11-22 15:17:36">
+<Class name="Training.Person">
+<Description>
+A sample class for training.</Description>
+<Super>%Persistent,%Populate</Super>
+<TimeChanged>62052,54537.88166</TimeChanged>
+<TimeCreated>62052,54248.823799</TimeCreated>
+
+<Property name="PhoneNumber">
+<Type>%String</Type>
+<Parameter name="MAXLEN" value="12"/>
+<Parameter name="POPSPEC" value="USPhone()"/>
+</Property>
+
+<Index name="PhoneNumberIndex">
+<Properties>PhoneNumber</Properties>
+</Index>
+
+<Property name="Name">
+<Type>%String</Type>
+<Required>1</Required>
+</Property>
+
+<Index name="NameIndex">
+<Properties>Name</Properties>
+</Index>
+
+<Property name="Email">
+<Type>%String</Type>
+<Parameter name="POPSPEC" value="##class(Training.Person).Email()"/>
+</Property>
+
+<Property name="DOB">
+<Type>%Date</Type>
+<Parameter name="FORMAT" value="5"/>
+<Parameter name="MAXVAL" value="+$H"/>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Training.PersonD</DataLocation>
+<DefaultData>PersonDefaultData</DefaultData>
+<IdLocation>^Training.PersonD</IdLocation>
+<IndexLocation>^Training.PersonI</IndexLocation>
+<StreamLocation>^Training.PersonS</StreamLocation>
+<Data name="PersonDefaultData">
+<Structure>listnode</Structure>
+<Subscript/>
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>PhoneNumber</Value>
+</Value>
+<Value name="3">
+<Value>Name</Value>
+</Value>
+<Value name="4">
+<Value>Email</Value>
+</Value>
+<Value name="5">
+<Value>DOB</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+</Export>

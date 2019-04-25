@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 2185U)" ts="2004-12-31 13:52:16">
+<Class name="Scan.BlackListCountMetric">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessMetric</Super>
+<TimeChanged>59900,47412.245926</TimeChanged>
+
+<Property name="BlackListEmails">
+<Type>Ens.DataType.Metric</Type>
+<Parameter name="RANGELOWER" value="0"/>
+<Parameter name="RANGEUPPER" value="50"/>
+<Parameter name="UNITS" value="BlackList Emails"/>
+</Property>
+
+<Method name="OnCalculateMetrics">
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	//Determine how many emails went to BlackList.txt
+	&sql(SELECT COUNT(*) INTO :count
+		 FROM Scan.EmailFileRequest
+		 WHERE FileName='BlackList.txt')
+
+	//Set the metric to the current count of emails to BlackList.txt
+	Set ..BlackListEmails = count
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+</Class>
+<Checksum value="2336174843"/>
+</Export>

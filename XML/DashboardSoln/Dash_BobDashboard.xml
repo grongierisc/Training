@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 2185U)" ts="2005-01-04 16:09:24">
+<Class name="Scan.DashboardBob">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Dashboard</Super>
+<TimeChanged>59904,58036.702916</TimeChanged>
+
+<XData name="Dashboard">
+<Data><![CDATA[
+<Dashboard RefreshRate="2000" Metric="Scan.SafeEmailCountMetric">
+<FuelGauge Label="SafeEmails" Property="SafeEmails" />
+<Smiley Label="LastFile" Property="LastFile" />
+</Dashboard>
+]]></Data>
+</XData>
+</Class>
+<Checksum value="2942164359"/>
+</Export>

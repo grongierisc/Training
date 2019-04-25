@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 2185U)" ts="2005-02-17 10:49:26">
+<Document name="Scan.DetermineBlackListBusRule.DecideFile.rul">
+<ruleSet host="Scan.DetermineBlackListBusRule" name="DecideFile" default="0">
+  <description>Decides if entry should be made to BlackList.txt or SafeEmail.txt. The ResultLocation is context.AddToBlackList</description>
+  <rule return="1">
+    <condition join="AND" operator="=" op1="Attributes.IsExternal" op2="1"></condition>
+    <condition join="AND" operator="=" op1="Attributes.IsRelated" op2="0"></condition>
+  </rule>
+</ruleSet></Document><Checksum value="1887173396"/>
+</Export>

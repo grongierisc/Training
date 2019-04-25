@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2012.1 (Build 504U)" ts="2011-10-27 12:18:25">
+<Class name="Scan.GetEmployeeInfo">
+<Description>
+</Description>
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessProcessBPL</Super>
+<TimeChanged>62391,44168.124056</TimeChanged>
+<TimeCreated>59473,53509</TimeCreated>
+
+<XData name="BPL">
+<Description>
+BPL Definition</Description>
+<XMLNamespace>http://www.intersystems.com/bpl</XMLNamespace>
+<Data><![CDATA[
+<process language='objectscript' request='Scan.CheckEmployeeRequest' response='Scan.CheckEmployeeResponse' height='2000' width='2000' >
+<sequence xend='200' yend='550' >
+<call name='CheckRelation' target='Scan.GetEmployeeDetails' async='1' xpos='200' ypos='251' >
+<request type='Scan.CheckRelationRequest' >
+<assign property="callrequest.ID" value="request.ID" action="set" />
+</request>
+<response type='Scan.CheckRelationResponse' >
+<assign property="response.IsRelated" value="callresponse.IsRelated" action="set" />
+</response>
+</call>
+<call name='CheckEmail' target='Scan.GetEmployeeDetails' async='1' xpos='199' ypos='351' >
+<request type='Scan.ValidateToAddressRequest' >
+<assign property="callrequest.ToAddress" value="request.ToAddress" action="set" />
+</request>
+<response type='Scan.ValidateToAddressResponse' >
+<assign property="response.IsExternal" value="callresponse.IsExternal" action="set" />
+</response>
+</call>
+<sync name='Wait for Responses' calls='CheckRelation,CheckEmail' timeout='5' type='all' xpos='201' ypos='450' />
+</sequence>
+</process>
+]]></Data>
+</XData>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+</Storage>
+</Class>
+</Export>

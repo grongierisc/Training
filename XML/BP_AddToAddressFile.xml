@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 14:57:19">
+<Class name="Scan.AddToAddressFile">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessProcessBPL</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59486,49919</TimeCreated>
+
+<XData name="BPL">
+<Data><![CDATA[
+<process language='objectscript' request='Scan.AddAddressRequest' response='Ens.Response' >
+<sequence >
+<call name='Add to AddressFile' xpos='500' ypos='200' target='Scan.MakeFileOperation' async='1' >
+<request type='Scan.AddressFileRequest' >
+<assign property='callrequest.IsExternal' value='request.IsExternal' action='set' />
+<assign property='callrequest.IsRelated' value='request.IsRelated' action='set' />
+<assign property='callrequest.ToAddress' value='request.ToAddress' action='set' />
+<assign property='callrequest.FileName' value='"Address.txt"' action='set' />
+</request>
+</call>
+</sequence>
+</process>
+
+]]></Data>
+</XData>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+</Storage>
+</Class>
+<Checksum value="2101533947"/>
+</Export>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 15:01:46">
+<Class name="Scan.EmailFileRequest">
+<ClassType>persistent</ClassType>
+<Language>cache</Language>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Request</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59494,48419.576364</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="Contents">
+<Type>Scan.CheckEmployeeRequest</Type>
+</Property>
+
+<Property name="FileName">
+<Type>%String</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>EmailFileRequestDefaultData</DefaultData>
+<Data name="EmailFileRequestDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"EmailFileRequest"</Subscript>
+<Value name="1">
+<Value>Contents</Value>
+</Value>
+<Value name="2">
+<Value>FileName</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Checksum value="3911018590"/>
+</Export>

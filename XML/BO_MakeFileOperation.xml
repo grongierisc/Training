@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 15:04:57">
+<Class name="Scan.MakeFileOperation">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessOperation</Super>
+<TimeChanged>59559,54219.590872</TimeChanged>
+<TimeCreated>59494,48419.616277</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Parameter name="ADAPTER">
+<Default>EnsLib.File.OutboundAdapter</Default>
+</Parameter>
+
+<Parameter name="INVOCATION">
+<Default>Queue</Default>
+</Parameter>
+
+<Method name="AddressFile">
+<FormalSpec>pRequest:Scan.AddressFileRequest,*pResponse:Ens.Response</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+
+	set out = $ZDATETIME($H)_" " 
+	set out = out_pRequest.ToAddress_" "
+	set out = out_pRequest.IsRelated_" "
+	set out = out_pRequest.IsExternal_$c(13,10)
+	
+	set tSC = ..Adapter.PutString(pRequest.FileName,out)
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<XData name="MessageMap">
+<Data><![CDATA[
+<MapItems>
+	<MapItem MessageType="Scan.AddressFileRequest"> 
+		<Method>AddressFile</Method>
+	</MapItem>
+</MapItems>
+]]></Data>
+</XData>
+</Class>
+<Checksum value="2533907823"/>
+</Export>

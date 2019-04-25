@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 916U)" ts="2004-08-06 14:37:46">
+<Class name="Final.AdjSalaryReq">
+<Description>
+</Description>
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Request</Super>
+<TimeChanged>59753,46473.315299</TimeChanged>
+
+<Property name="AdjSalary">
+<Type>%Numeric</Type>
+</Property>
+
+<Property name="ID">
+<Type>%Integer</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>AdjSalaryReqDefaultData</DefaultData>
+<Data name="AdjSalaryReqDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"AdjSalaryReq"</Subscript>
+<Value name="1">
+<Value>AdjSalary</Value>
+</Value>
+<Value name="2">
+<Value>ID</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Final.AdjSalaryResp">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Response</Super>
+<TimeChanged>59753,48276.87892</TimeChanged>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="Success">
+<Type>%Boolean</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>AdjSalaryRespDefaultData</DefaultData>
+<Data name="AdjSalaryRespDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"AdjSalaryResp"</Subscript>
+<Value name="1">
+<Value>Success</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Final.GetEmpDetailReq">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Request</Super>
+<TimeChanged>59753,46373.558299</TimeChanged>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="ID">
+<Type>%Integer</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>GetEmpDetailReqDefaultData</DefaultData>
+<Data name="GetEmpDetailReqDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"GetEmpDetailReq"</Subscript>
+<Value name="1">
+<Value>ID</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Final.GetEmpDetailResp">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Response</Super>
+<TimeChanged>59753,46430.21517</TimeChanged>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="Salary">
+<Type>%Numeric</Type>
+</Property>
+
+<Property name="SickDays">
+<Type>%Integer</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>GetEmpDetailRespDefaultData</DefaultData>
+<Data name="GetEmpDetailRespDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"GetEmpDetailResp"</Subscript>
+<Value name="1">
+<Value>Salary</Value>
+</Value>
+<Value name="2">
+<Value>SickDays</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Final.MaintainEmp">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessOperation</Super>
+<TimeChanged>59753,48305.048647</TimeChanged>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Parameter name="ADAPTER">
+<Default>EnsLib.SQL.OutboundAdapter</Default>
+</Parameter>
+
+<Parameter name="INVOCATION">
+<Default>Queue</Default>
+</Parameter>
+
+<Method name="AdjSalary">
+<FormalSpec>pRequest:Final.AdjSalaryReq,*pResponse:Final.AdjSalaryResp</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	s pResponse=##class(Final.AdjSalaryResp).%New()
+	s SQL="update employee set Salary="_pRequest.AdjSalary_" where EmployeeID="_pRequest.ID
+	s tSC=..Adapter.ExecuteUpdate(.tResult,SQL)
+	s pResponse.Success=tResult
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="GetEmpDetail">
+<FormalSpec>pRequest:Final.GetEmpDetailReq,*pResponse:Final.GetEmpDetailResp</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	s pResponse=##class(Final.GetEmpDetailResp).%New()
+	s SQL="select salary, sickdays from employee where employeeid="_pRequest.ID
+	s tSC=..Adapter.ExecuteQuery(.tResult,SQL)
+	do tResult.Next()
+	s pResponse.Salary=tResult.GetData(1)
+	s pResponse.SickDays=tResult.GetData(2)
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<XData name="MessageMap">
+<Data><![CDATA[
+<MapItems>
+	<MapItem MessageType="Final.GetEmpDetailReq"> 
+		<Method>GetEmpDetail</Method>
+	</MapItem>
+	<MapItem MessageType="Final.AdjSalaryReq"> 
+		<Method>AdjSalary</Method>
+	</MapItem>
+</MapItems>
+]]></Data>
+</XData>
+</Class>
+<Project name="Final" LastModified="2004-08-06 14:37:46">
+  <Items>
+    <ProjectItem name="Final.AdjSalaryReq" type="CLS"/>
+    <ProjectItem name="Final.AdjSalaryResp" type="CLS"/>
+    <ProjectItem name="Final.GetEmpDetailReq" type="CLS"/>
+    <ProjectItem name="Final.GetEmpDetailResp" type="CLS"/>
+    <ProjectItem name="Final.MaintainEmp" type="CLS"/>
+    <ProjectItem name="Final.SalaryAdj" type="CLS"/>
+    <ProjectItem name="Final.SalaryAdjCSP" type="CLS"/>
+    <ProjectItem name="Final.SalaryAdjReq" type="CLS"/>
+    <ProjectItem name="Final.SalaryAdjResp" type="CLS"/>
+    <ProjectItem name="Final.SalaryAdjustment" type="CLS"/>
+    <ProjectItem name="csp/ensemble/SalaryForm.csp" type="CSP"/>
+    <ProjectItem name="csp/ensemble/SalarySubmit.csp" type="CSP"/>
+  </Items>
+</Project>
+<Class name="Final.SalaryAdj">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessProcessBPL</Super>
+<TimeChanged>59753,51301</TimeChanged>
+<TimeCreated>59753,49616</TimeCreated>
+
+<XData name="BPL">
+<Data><![CDATA[
+<process language='objectscript' request='Final.SalaryAdjReq' response='Final.SalaryAdjResp' >
+<context>
+<property name='Salary' type='%Numeric' />
+<property name='SickDays' type='%Integer' />
+<property name='AdjSalary' type='%Numeric' />
+<property name='Success' type='%Boolean' />
+</context>
+<sequence >
+<call name='Get Emp Details' xpos='500' ypos='200' target='Final.MaintainEmp' async='1' >
+<request type='Final.GetEmpDetailReq' >
+<assign property='callrequest.ID' value='request.ID' action='set' />
+</request>
+<response type='Final.GetEmpDetailResp' >
+<assign property='context.Salary' value='callresponse.Salary' action='set' />
+<assign property='context.SickDays' value='callresponse.SickDays' action='set' />
+</response>
+</call>
+<sync name='Wait for Details' xpos='500' ypos='300' calls='Get Emp Details' timeout='30' type='all' />
+<if name='Check Sick Days' xpos='500' ypos='400' condition='context.SickDays&gt;5' >
+<true>
+<assign name='&gt;5' xpos='390' ypos='600' property='context.AdjSalary' value='(context.Salary*(request.Percentage/100))-(100*context.SickDays)' action='set' />
+</true>
+<false>
+<assign name='&lt;=5' xpos='610' ypos='600' property='context.AdjSalary' value='(context.Salary*(request.Percentage/100))-(50*context.SickDays)' action='set' />
+</false>
+</if>
+<call name='Adjust Salary' xpos='500' ypos='800' target='Final.MaintainEmp' async='1' >
+<request type='Final.AdjSalaryReq' >
+<assign property='callrequest.ID' value='request.ID' action='set' />
+<assign property='callrequest.AdjSalary' value='context.AdjSalary' action='set' />
+</request>
+<response type='Final.AdjSalaryResp' >
+<assign property='context.Success' value='callresponse.Success' action='set' />
+</response>
+</call>
+<sync name='Wait for Update' xpos='757' ypos='860' calls='Adjust Salary' timeout='30' type='all' />
+<if name='Check Update' xpos='500' ypos='900' condition='context.Success=1' >
+<true>
+<assign name='Succeeded' xpos='390' ypos='1100' property='response.Success' value='context.Success' action='set' />
+<assign name='Return New Salary' xpos='390' ypos='1200' property='response.NewSalary' value='context.AdjSalary' action='set' />
+</true>
+<false>
+<assign name='Failed' xpos='610' ypos='1100' property='response.Success' value='context.Success' action='set' />
+<assign name='Return Current Salary' xpos='610' ypos='1200' property='response.NewSalary' value='context.Salary' action='set' />
+</false>
+</if>
+</sequence>
+</process>
+
+]]></Data>
+</XData>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+</Storage>
+</Class>
+<Class name="Final.SalaryAdjCSP">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessService</Super>
+<TimeChanged>59753,52187.106014</TimeChanged>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Method name="OnProcessInput">
+<FormalSpec>pInput:%CSP.Request,pOutput:%RegisteredObject</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+
+	Set tSalaryAdj = ##class(Final.SalaryAdjReq).%New()
+	Set tSalaryAdj.ID = pInput.Get("ID")
+	Set tSalaryAdj.Percentage = pInput.Get("SalaryAdjustment")
+	Set tResponse=##class(Final.SalaryAdjResp).%New()
+	Set tSC = ..SendRequestSync("Final.SalaryAdj",tSalaryAdj,.tResponse)
+	if tResponse.Success {
+		Set pOutput = ##class(Ens.StringContainer).%New("Your new salary is "_tResponse.NewSalary_".")
+	} else {
+		set pOutput= ##class(Ens.StringContainer).%New("Your salary adjustment failed.")
+	}
+	Quit $$$OK
+]]></Implementation>
+</Method>
+</Class>
+<Class name="Final.SalaryAdjReq">
+<Description>
+</Description>
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Request</Super>
+<TimeChanged>59753,48434.578184</TimeChanged>
+
+<Property name="ID">
+<Type>%Integer</Type>
+</Property>
+
+<Property name="Percentage">
+<Type>%Numeric</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>SalaryAdjReqDefaultData</DefaultData>
+<Data name="SalaryAdjReqDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"SalaryAdjReq"</Subscript>
+<Value name="1">
+<Value>ID</Value>
+</Value>
+<Value name="2">
+<Value>Percentage</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Final.SalaryAdjResp">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Response</Super>
+<TimeChanged>59753,48494.963837</TimeChanged>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="Success">
+<Type>%Boolean</Type>
+</Property>
+
+<Property name="NewSalary">
+<Type>%Numeric</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>SalaryAdjRespDefaultData</DefaultData>
+<Data name="SalaryAdjRespDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"SalaryAdjResp"</Subscript>
+<Value name="1">
+<Value>Success</Value>
+</Value>
+<Value name="2">
+<Value>NewSalary</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Final.SalaryAdjustment">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Production</Super>
+<TimeChanged>59753,52255</TimeChanged>
+
+<XData name="ProductionDefinition">
+<Data><![CDATA[
+<Production Name="Final.SalaryAdjustment" TestingEnabled="true">
+  <ActorPoolSize>2</ActorPoolSize>
+  <Item Name="Final.MaintainEmp" ClassName="Final.MaintainEmp" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0">
+    <Setting Target="Host" Name="RetryInterval">5</Setting>
+    <Setting Target="Host" Name="FailureTimeout">15</Setting>
+    <Setting Target="Adapter" Name="DSN">Access</Setting>
+    <Setting Target="Adapter" Name="StayConnected">-1</Setting>
+    <Setting Target="Adapter" Name="ConnectTimeout">5</Setting>
+  </Item>
+  <Item Name="Final.SalaryAdj" ClassName="Final.SalaryAdj" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0">
+  </Item>
+  <Item Name="Final.SalaryAdjCSP" ClassName="Final.SalaryAdjCSP" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0">
+  </Item>
+</Production>
+]]></Data>
+</XData>
+</Class>
+<CSP name="SalaryForm.csp" application="/csp/ensemble/" default="1">
+<![CDATA[<HTML>
+<HEAD>
+
+<TITLE>	Update Salary </TITLE>
+
+</HEAD>
+
+<BODY>
+
+<h1>Email Submission</h1> 
+<form action=SalarySubmit.csp>
+<div class="text1">
+<b>
+Welcome to the Salary Update application. Please enter the ID and the % salary adjustment you would
+<br> like to make for this employee.
+</b></div>
+<div align="center">
+<table>
+<!--Data is added to the fields to make testing easier.
+The data can be removed or changed.-->
+<tr><td align=right>ID:</td><td><input name="ID" value=1></td></tr>
+<tr><td align=right>SalaryAdjustment:</td><td><input name="SalaryAdjustment" value=100> (as a % )</td></tr>
+<tr><td align=right></td><td align=right><br><input type=submit value="Apply"></td></tr>
+</table>
+</div>
+</form>
+
+</BODY>
+</HTML>
+]]></CSP>
+<CSP name="SalarySubmit.csp" application="/csp/ensemble/" default="1">
+<![CDATA[<HTML>
+<HEAD>
+<TITLE>	Cache Server Page </TITLE>
+
+</HEAD>
+
+<BODY>
+<script language=cache runat =server>
+
+	
+	
+	//write %request.Get("SalaryAdjustment"),"<br>"
+	//set %request.Data("SalaryAdjustment",1)=%request.Get("SalaryAdjustment")
+	//write %request.Get("SalaryAdjustment"),"<br>"
+	//quit
+	Set tSC=##class(Ens.Director).CreateBusinessService("Final.SalaryAdjCSP",.tService)
+	If ($$$ISERR(tSC)) {
+		// Error: assume system is not running
+		Write "The FindRate system is currently not accepting requests.<br>"
+		Write "Please try again later."
+	}	
+	 
+	Set tSC=tService.ProcessInput(%request,.output)
+	If ($$$ISERR(tSC)) {
+		// Error: assume system is not running
+		Write "The FindRate system is currently not accepting requests.<br>"
+		Write "Please try again later."
+	}
+	ElseIf ($ISObject($G(output))) {
+		Write output.StringValue
+	}
+	Else
+	{
+		Write "Update Successful!"
+	}
+	
+</script>
+
+</script>
+
+		<!-- Put your page code here -->
+</BODY>
+</HTML>
+]]></CSP>
+<Checksum value="3466472074"/>
+</Export>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2012.1 (Build 504U)" ts="2011-10-27 15:23:49">
+<Class name="Scan.ChangeForSafeEmailDTL">
+<ClassType/>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.DataTransformDTL</Super>
+<TimeChanged>60374,43176</TimeChanged>
+<TimeCreated>60374,41164</TimeCreated>
+
+<XData name="DTL">
+<Data><![CDATA[
+<?xml version="1.0" ?>
+<transform targetClass='Scan.CheckEmployeeRequest' sourceClass='Scan.CheckEmployeeRequest' create='new' language='objectscript'>
+<assign property='target.EmailText' value='"Contains gizmo "_source.EmailText' action='set'/>
+<assign property='target.ID' value='source.ID' action='set'/>
+<assign property='target.Name' value='source.Name' action='set'/>
+<assign property='target.ToAddress' value='$piece(source.ToAddress,"@",2)' action='set'/>
+</transform>
+]]></Data>
+</XData>
+</Class>
+</Export>

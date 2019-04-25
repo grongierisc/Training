@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 916U)" ts="2004-08-12 10:55:22">
+<Class name="Scan.ScanFileService">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessService</Super>
+<TimeChanged>59759,38826.964261</TimeChanged>
+<TimeCreated>59278,43007.285</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Parameter name="ADAPTER">
+<Description>
+Name of the adapter class</Description>
+<Default>EnsLib.File.InboundAdapter</Default>
+</Parameter>
+
+<Method name="OnProcessInput">
+<FormalSpec>pInput:%Stream.Object,pOutput:%RegisteredObject</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+
+		// The first line is 'Name:ID:ToAddress:EmailText'
+		// Read the first line.
+		Set tLine=pInput.ReadLine()
+		// Create the request to send to DetermineBlackList
+		Set tRequest = ##class(Scan.CheckEmployeeRequest).%New()
+		Set tRequest.Name=$p(tLine,":",1)
+		Set tRequest.ID=$p(tLine,":",2)
+		Set tRequest.ToAddress=$p(tLine,":",3)
+		Set tRequest.EmailText=$p(tLine,":",4)
+			
+		//Check email text for code word
+		//if there, send async request to DetermineBlackList
+		if $FIND(tRequest.EmailText, "gizmo") {
+			set tSC = ..SendRequestAsync("Scan.DetermineBlackList",tRequest)
+		}
+	
+		//if not there, send async request to MakeFileOperation
+		ELSE {
+			set tEmailFileRequest = ##class(Scan.EmailFileRequest).%New()
+		set tEmailFileRequest.FileName = "SafeEmail.txt"
+		set tEmailFileRequest.Contents = tRequest
+		set tSC = ..SendRequestAsync("Scan.MakeFileOperation",tEmailFileRequest)
+		}
+
+		Quit $$$OK
+	
+]]></Implementation>
+</Method>
+</Class>
+<Checksum value="169209953"/>
+</Export>

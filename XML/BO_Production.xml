@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 916U)" ts="2004-01-26 14:54:31">
+
+<Class name="Scan.ScanEmailProduction">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Production</Super>
+<TimeChanged>59560,50180</TimeChanged>
+
+<XData name="ProductionDefinition">
+<Data><![CDATA[
+<Production Name="Scan.ScanEmailProduction" TestingEnabled="true">
+  <ActorPoolSize>2</ActorPoolSize>
+  <Item Name="Scan.MakeFileOperation" ClassName="Scan.MakeFileOperation" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0">
+    <Setting Target="Host" Name="RetryInterval">5</Setting>
+    <Setting Target="Host" Name="FailureTimeout">15</Setting>
+    <Setting Target="Adapter" Name="FilePath">c:\Integration\scan</Setting>
+    <Setting Target="Adapter" Name="Overwrite">0</Setting>
+    <Setting Target="Adapter" Name="Charset">Default</Setting>
+    <Setting Target="Adapter" Name="OpenTimeout">5</Setting>
+  </Item>
+  <Item Name="Scan.GetEmployeeDetails" ClassName="Scan.GetEmployeeDetails" PoolSize="1" Enabled="true" Foreground="false" DisableErrorTraps="false" InactivityTimeout="0">
+    <Setting Target="Host" Name="RetryInterval">5</Setting>
+    <Setting Target="Host" Name="FailureTimeout">15</Setting>
+    <Setting Target="Adapter" Name="DSN">Access</Setting>
+    <Setting Target="Adapter" Name="StayConnected">-1</Setting>
+    <Setting Target="Adapter" Name="ConnectTimeout">5</Setting>
+  </Item>
+</Production>
+]]></Data>
+</XData>
+</Class>
+
+<Checksum value="3779788472"/>
+</Export>

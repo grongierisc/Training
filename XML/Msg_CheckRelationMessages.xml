@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 14:59:03">
+<Class name="Scan.CheckRelationRequest">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Request</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59494,48419.534019</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="ID">
+<Type>%Integer</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>CheckRelationRequestDefaultData</DefaultData>
+<Data name="CheckRelationRequestDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"CheckRelationRequest"</Subscript>
+<Value name="1">
+<Value>ID</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Class name="Scan.CheckRelationResponse">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Response</Super>
+<TimeChanged>59559,50730</TimeChanged>
+<TimeCreated>59494,48419.540463</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Property name="IsRelated">
+<Type>%Boolean</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>CheckRelationResponseDefaultData</DefaultData>
+<Data name="CheckRelationResponseDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"CheckRelationResponse"</Subscript>
+<Value name="1">
+<Value>IsRelated</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+<Checksum value="348355223"/>
+</Export>

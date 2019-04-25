@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 2185U)" ts="2004-12-31 13:51:38">
+<Class name="Scan.DashboardAdmin">
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Dashboard</Super>
+<TimeChanged>59900,48795.913109</TimeChanged>
+
+<XData name="Dashboard">
+<Data><![CDATA[
+<Dashboard RefreshRate="2000" Metric="Scan.BlackListCountMetric">
+<Speedometer Label="BlackList Emails" Property="BlackListEmails" />
+</Dashboard>
+]]></Data>
+</XData>
+</Class>
+<Checksum value="737472218"/>
+</Export>

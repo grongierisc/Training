@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2011.2 (Build 311U)" ts="2011-10-26 11:16:53">
+<Class name="Scan.GetEmployeeInfo.TreatAsInternal">
+<Description>
+Decides if an external email should be treated as internal. If so, sets context.IsExternal=0 and returns 0; otherwise, returns the existing IsExternal value. It returns a value to response.IsExternal.</Description>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.Rule.Definition</Super>
+<TimeChanged>62390,39570.461926</TimeChanged>
+<TimeCreated>62390,36603.449807</TimeCreated>
+
+<Parameter name="RuleAssistClass">
+<Default>Ens.Rule.GeneralBusinessRuleAssist</Default>
+</Parameter>
+
+<XData name="RuleDefinition">
+<XMLNamespace>http://www.intersystems.com/rule</XMLNamespace>
+<Data><![CDATA[
+<ruleDefinition alias="" context="Scan.GetEmployeeInfo.Context" production="">
+<ruleSet name="" effectiveBegin="" effectiveEnd="">
+<rule name="" disabled="false">
+<when condition="(ToAddress=&quot;SamSmooth@MIU.com&quot;)||(ToAddress=&quot;PaulaPromotions@MIU.com&quot;)">
+<assign property="IsExternal" value="0"></assign>
+<return>IsExternal</return>
+</when>
+</rule>
+<return>IsExternal</return>
+</ruleSet>
+</ruleDefinition>
+]]></Data>
+</XData>
+</Class>
+</Export>

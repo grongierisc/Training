@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.16 (Build 2651U)" ts="2006-07-25 10:49:06">
+<Class name="Scan.DetermineBlackList">
+<ClassType>persistent</ClassType>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessProcessBPL</Super>
+<TimeChanged>60471,38908</TimeChanged>
+<TimeCreated>59473,55585</TimeCreated>
+
+<XData name="BPL">
+<Data><![CDATA[
+<process language='objectscript' request='Scan.CheckEmployeeRequest' height='2000' width='2000' >
+<context>
+<property name='Attributes' type='Scan.CheckEmployeeResponse' />
+</context>
+<sequence xend='550' yend='750' >
+<call name='Get Employee Info' target='Scan.GetEmployeeInfo' async='1' xpos='550' ypos='200' >
+<request type='Scan.CheckEmployeeRequest' >
+<assign property='callrequest' value='request' action='set' />
+</request>
+<response type='Scan.CheckEmployeeResponse' >
+<assign property='context.Attributes' value='callresponse' action='set' />
+</response>
+</call>
+<sync name='Wait For Response' calls='Get Employee Info' timeout='30' type='all' xpos='550' ypos='300' />
+<if name='Blacklist?' condition='&apos;context.Attributes.IsRelated &amp; context.Attributes.IsExternal' xpos='550' ypos='400' xend='550' yend='650' >
+<true>
+<call name='Blacklist File' target='Scan.MakeFileOperation' async='1' xpos='820' ypos='550' >
+<request type='Scan.EmailFileRequest' >
+<assign property='callrequest.FileName' value='"BlackList.txt"' action='set' />
+<assign property='callrequest.Contents' value='request' action='set' />
+</request>
+</call>
+</true>
+<false>
+<call name='Safe Email File' target='Scan.MakeFileOperation' async='1' xpos='550' ypos='550' >
+<request type='Scan.EmailFileRequest' >
+<assign property='callrequest.FileName' value='"SafeEmail.txt"' action='set' />
+<assign property='callrequest.Contents' value='request' action='set' />
+</request>
+</call>
+</false>
+</if>
+</sequence>
+</process>
+
+]]></Data>
+</XData>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+</Storage>
+</Class>
+<Checksum value="3461828541"/>
+</Export>

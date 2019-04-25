@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="9" zv="Cache for Windows NT (Intel) 5.0.5 (Build 913U)" ts="2004-01-25 14:55:44">
+<Class name="Scan.GetEmployeeDetails">
+<Language>cache</Language>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>Ens.BusinessOperation</Super>
+<TimeChanged>59559,53536.043873</TimeChanged>
+<TimeCreated>59494,48419.584539</TimeCreated>
+<ClassDefinitionError>0</ClassDefinitionError>
+
+<Parameter name="ADAPTER">
+<Default>EnsLib.SQL.OutboundAdapter</Default>
+</Parameter>
+
+<Parameter name="INVOCATION">
+<Default>Queue</Default>
+</Parameter>
+
+<Method name="CheckRelation">
+<FormalSpec>pRequest:Scan.CheckRelationRequest,*pResponse:Scan.CheckRelationResponse</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Set pResponse = ##class(Scan.CheckRelationResponse).%New()
+	//need to pass tResult by reference explicitly in ObjectScript
+	//Use an adapter to run a query in the Employee database.
+	Set tSC = ..Adapter.ExecuteQuery(.tResult,"Select RelationshipToOwner from Employee where EmployeeID="_pRequest.ID)
+	
+	//Check the result to determine the relationship to the owner.
+		//The query returns a result set. To use a result set, use tResult.Next()
+		//to be positioned at the first returned row of the result set.
+		//Since there is only one result in the result set, no looping is required.
+		//GetData(x) returns the xth field asked for in the Select statement.
+	
+	do tResult.Next()
+	set relation = tResult.GetData(1)
+	if ((relation = "None") || (relation="")) {
+		set pResponse.IsRelated=0
+		} else {
+		set pResponse.IsRelated=1
+	}
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="ValidateToAddress">
+<FormalSpec>pRequest:Scan.ValidateToAddressRequest,*pResponse:Scan.ValidateToAddressResponse</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set pResponse = ##class(Scan.ValidateToAddressResponse).%New()
+	
+	//Use an adapter to run a query in the Employee database.
+	set tSC = ..Adapter.ExecuteQuery(.tResult,"Select FirstName from Employee where Email='"_pRequest.ToAddress_"'")
+		
+	//If the result set is empty, then the address is an external address.
+	If tResult.Next() { 
+		set pResponse.IsExternal=0
+	} else {
+		set pResponse.IsExternal=1
+	}
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<XData name="MessageMap">
+<Data><![CDATA[
+<MapItems>
+	<MapItem MessageType="Scan.CheckRelationRequest"> 
+		<Method>CheckRelation</Method>
+	</MapItem>
+	<MapItem MessageType="Scan.ValidateToAddressRequest"> 
+		<Method>ValidateToAddress</Method>
+	</MapItem>
+</MapItems>
+]]></Data>
+</XData>
+</Class>
+<Checksum value="2337985152"/>
+</Export>
