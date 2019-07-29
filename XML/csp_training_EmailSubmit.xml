@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2018.1.2 (Build 309U)" ts="2019-04-25 09:45:24">
+<CSP name="EmailForm.csp" application="/csp/training/" default="1"><![CDATA[
+<html>
+<head>
+<LINK REL="stylesheet" TYPE="text/css" HREF="csputils.css" TITLE="Standard Style" >
+</head>
+<body>
+<h1>Email Submission</h1> 
+<form action=EmailSubmit.csp>
+<div align="center" class="text1">
+Welcome to the Doodad Inc. email interface. Please send your email using the form below.
+</div>
+<div align="center">
+<table>
+<!--Data is added to the fields to make testing easier.
+The data can be removed or changed.-->
+<tr><td align=right>Name:</td><td><input name="Name" value=Test></td></tr>
+<tr><td align=right>Company ID:</td><td><input name="ID" value=1></td></tr>
+<tr><td align=right>To:</td><td><input name="ToAddress" value=@doodad.com></td></tr>
+<tr><td align=right>Text:</td><td><input name="EmailText" value="a gizmo"></td></tr>
+<tr><td align=right>&nbsp;</td><td align=right><input type=submit value="Apply"></td></tr>
+</table>
+</div>
+</form>
+</body>
+</html>]]></CSP>
+
+
+<CSP name="EmailSubmit.csp" application="/csp/training/" default="1"><![CDATA[
+<%@ PAGE LANGUAGE="CACHE" %>
+
+<html>
+<head>
+<LINK REL="stylesheet" TYPE="text/css" HREF="csputils.css" TITLE="Standard Style" >
+</head>
+<body>
+<h1>Email Sent</h1>
+<div align="center" class="Text1">
+Please be advised that your email may be reviewed for inappropriate information.<hr>
+</div>
+<div align="center" class="Text">
+<script language="cache" runat=server>
+//This is where the data is sent to the Business Service
+
+//First, create an instance of the busines service.
+set tSC=##class(Ens.Director).CreateBusinessService("Scan.ScanCSPRequestService",.tService)
+
+If $$$ISERR(tSC)
+{
+	write "The email system can currently not scan for inappropriate information.<br>"
+	write "Make sure the Production and correct Business Service are running.<br>"
+	do $system.OBJ.DisplayError(tSC)
+}
+Else
+{
+	//Send the email information to the Business Service for scanning.
+	set tSC=tService.ProcessInput(%request,.output)
+
+If $$$ISERR(tSC)
+{
+
+	write "The email system can currently not scan for inappropriate information.<br>"
+	write "Make sure the correct Businesss Service is functioning properly.<br>"
+	do $system.OBJ.DisplayError(tSC)
+}
+}
+
+
+</script>
+
+</div>
+<div align="center" class="Text">
+<a href="EmailForm.csp">Back</a>
+</div>
+</body>
+</html>]]></CSP>
+</Export>
